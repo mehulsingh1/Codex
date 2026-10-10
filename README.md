@@ -4,6 +4,15 @@
 
 Built for the hackathon problem statement *"GD Arena: build the room where students practise group discussions."*
 
+> [!IMPORTANT]
+> **For the best experience, run GD Arena locally on a laptop with an NVIDIA RTX GPU** (tested on an RTX 4060, 8 GB).
+>
+> GD Arena is voice-first, so the voices matter most. Run locally, every AI participant speaks through **Kokoro** on your own GPU: natural, expressive voices that make the room feel like a real GD.
+>
+> The hosted version runs on free cloud servers with no GPU, so it cannot run Kokoro. It uses Edge TTS voices instead, which sound flatter. The free backend also sleeps when idle, so the first load can take about 50 seconds. Everything else works the same, but the discussion feels noticeably less real.
+>
+> Setup takes about 10 minutes: see [Setup on Windows](#setup-on-windows).
+
 ![GD Arena home](docs/readme/home.png)
 
 ## The problem
@@ -104,8 +113,8 @@ You need Windows 10/11, Node 20+, Python 3.12 (3.10 to 3.12 work; **3.13 cannot 
 - **Landing page** (`/`): hero video, how it works, features, feedback preview, the AI panel, FAQ. Content lives in `frontend/src/landing/content.ts`; the FAQ also feeds the FAQ structured data.
 - **Topic page** (`/#/practice`): three suggested topics, a custom topic box, the **Surprise me** wand for a random topic, and compact panel / format / language options.
 - **Room** and **Report** follow from there. The browser back button works between landing and topic page.
-- **Videos**: web-sized copies (720p, no audio, about 4 MB in total) are in `frontend/public/media/`. They play only while visible and show a still image if the visitor prefers reduced motion. Your original 4K clips in the project root are not used by the app and can be moved out of the project.
-- **SEO**: title, description, Open Graph and Twitter tags and `WebApplication` structured data are in `frontend/index.html`; `robots.txt` is in `public/`. Before deploying, add a `<link rel="canonical" href="https://your-domain/">` tag and a `Sitemap:` line in `robots.txt` with your real domain.
+- **Videos**: web-sized copies (720p, no audio, about 4 MB in total) are in `frontend/public/media/`. They play only while visible and show a still image if the visitor prefers reduced motion.
+- **SEO**: title, description, Open Graph and Twitter tags and `WebApplication` structured data are in `frontend/index.html`; `robots.txt` is in `public/`.
 
 ## Using it
 
@@ -132,7 +141,7 @@ Formats: **Standard**, or **Fishbowl** (you watch the first few exchanges, then 
 cd backend
 .\.venv312\Scripts\python -m pytest -q tests
 ```
-31 tests cover the turn engine (validation, retry, rate-limit and timeout fallbacks), report validation (quotes must exist verbatim in the transcript) and the session (barge-in, fishbowl, reconnect). They run offline with a fake Groq client.
+37 tests cover the turn engine (validation, retry, rate-limit and timeout fallbacks), report validation (quotes must exist verbatim in the transcript) and the session (barge-in, fishbowl, reconnect). They run offline with a fake Groq client.
 
 ## How it fits together
 

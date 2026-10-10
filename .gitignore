@@ -12,3 +12,4 @@ backend/.venv312/
 server.log
 server.err.log
 docs/screens/
+*.pptx
