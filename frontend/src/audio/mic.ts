@@ -1,3 +1,4 @@
+import { apiUrl } from '../api'
 import { getAudioContext } from './context'
 import { levelBus } from './levelBus'
 
@@ -224,7 +225,8 @@ export class Mic {
     if (!this.stream) return
     u.chunks = []
     try {
-      u.recorder = new MediaRecorder(this.stream, { mimeType: 'audio/webm;codecs=opus', audioBitsPerSecond: 32000 })
+      const mimeType = ['audio/webm;codecs=opus', 'audio/mp4'].find((t) => MediaRecorder.isTypeSupported?.(t))
+      u.recorder = new MediaRecorder(this.stream, { ...(mimeType && { mimeType }), audioBitsPerSecond: 32000 })
     } catch {
       try { u.recorder = new MediaRecorder(this.stream) } catch { return }
     }
@@ -236,15 +238,16 @@ export class Mic {
     const rec = u.recorder
     if (!rec || rec.state !== 'recording') return
     rec.onstop = async () => {
-      const blob = new Blob(u.chunks ?? [], { type: rec.mimeType || 'audio/webm' })
+      const mime = rec.mimeType || 'audio/webm'
+      const blob = new Blob(u.chunks ?? [], { type: mime })
       if (blob.size < 1500) return
       const form = new FormData()
-      form.append('audio', blob, 'speech.webm')
+      form.append('audio', blob, `speech.${mime.includes('mp4') ? 'mp4' : mime.includes('ogg') ? 'ogg' : 'webm'}`)
       form.append('language', this.lang === 'hi' ? 'hi' : 'en')
       let failed = true
       for (let attempt = 0; attempt < 2 && failed; attempt++) {
         try {
-          const r = await fetch('/api/stt', { method: 'POST', body: form })
+          const r = await fetch(apiUrl('/stt'), { method: 'POST', body: form })
           if (r.ok) {
             failed = false
             const { text } = (await r.json()) as { text: string }

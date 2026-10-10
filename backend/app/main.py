@@ -29,8 +29,11 @@ app = FastAPI(title="GD Arena", lifespan=lifespan)
 _CORS_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://mehulsingh1-codex.pages.dev",  # Cloudflare Pages default URL
+    "https://teamnexoryx.pages.dev",
 ]
+# Any Cloudflare Pages site (production and preview deploys like abc123.project.pages.dev).
+# Safe because the API uses no cookies or credentials.
+_PAGES_ORIGIN_RE = r"https://([a-z0-9-]+\.)*pages\.dev"
 # Allow extra origins set via env (comma-separated), e.g. custom domain
 _extra = os.getenv("CORS_ORIGINS", "")
 if _extra:
@@ -39,6 +42,7 @@ if _extra:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_CORS_ORIGINS,
+    allow_origin_regex=_PAGES_ORIGIN_RE,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["X-TTS-Engine"],

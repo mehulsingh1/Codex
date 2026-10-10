@@ -1,3 +1,4 @@
+import { apiUrl } from '../api'
 import { audioState, getAudioContext } from './context'
 import { levelBus } from './levelBus'
 
@@ -56,7 +57,7 @@ export class VoicePlayer {
       const ac = new AbortController()
       this.aborters.push(ac)
       try {
-        const r = await fetch('/api/tts', {
+        const r = await fetch(apiUrl('/tts'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text, voice: persona, lang }),

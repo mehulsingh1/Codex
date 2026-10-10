@@ -1,3 +1,5 @@
+import { wsUrl } from '../api'
+
 export type Connection = 'connecting' | 'open' | 'reconnecting' | 'closed'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,18 +24,8 @@ export class RoomClient {
   }
 
   connect() {
-    // In production VITE_API_URL is the Render backend (e.g. https://codex-backend.onrender.com).
-    // In dev, VITE_API_URL is empty so we use the same host (Vite proxies /ws → localhost:8000).
-    const apiUrl = import.meta.env.VITE_API_URL as string | undefined
-    let wsUrl: string
-    if (apiUrl) {
-      wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws'
-    } else {
-      const proto = location.protocol === 'https:' ? 'wss' : 'ws'
-      wsUrl = `${proto}://${location.host}/ws`
-    }
     this.onStatus(this.attempt === 0 ? 'connecting' : 'reconnecting')
-    const ws = new WebSocket(wsUrl)
+    const ws = new WebSocket(wsUrl())
     this.ws = ws
     ws.onopen = () => {
       this.attempt = 0

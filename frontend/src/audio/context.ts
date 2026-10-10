@@ -18,7 +18,7 @@ export function unlockAudio(): void {
 }
 
 // Chrome may start the context suspended; any click or key press later unlocks it.
-for (const ev of ['pointerdown', 'keydown'] as const) {
+for (const ev of ['pointerdown', 'touchend', 'click', 'keydown'] as const) {
   window.addEventListener(ev, () => unlockAudio(), { once: false, passive: true })
 }
 

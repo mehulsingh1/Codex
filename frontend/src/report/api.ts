@@ -1,3 +1,4 @@
+import { apiUrl } from '../api'
 import type { TranscriptLine } from '../types'
 
 export interface Share { speaker: string; name: string; seconds: number; words: number; share: number }
@@ -24,7 +25,7 @@ export async function fetchReport(topic: string, transcript: TranscriptLine[]): 
       id: l.id, speaker: l.speaker, text: l.text, t_start: l.t, t_end: l.tEnd ?? null, interrupted: !!l.interrupted,
     })),
   }
-  const r = await fetch('/api/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+  const r = await fetch(apiUrl('/report'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
   if (!r.ok) throw new Error(`report failed (${r.status})`)
   return (await r.json()) as ReportData
 }
