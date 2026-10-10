@@ -4,6 +4,8 @@
 
 Built for the hackathon problem statement *"GD Arena: build the room where students practise group discussions."*
 
+**Presentation:** [GD Arena deck (PDF)](docs/GD_Arena_Nexoryx.pdf), Team Nexoryx.
+
 > [!IMPORTANT]
 > **For the best experience, run GD Arena locally on a laptop with an NVIDIA RTX GPU** (tested on an RTX 4060, 8 GB).
 >
