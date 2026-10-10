@@ -12,11 +12,21 @@ import SpeakerLight from './SpeakerLight'
 const BG = '#EFE7DA'
 const CAM = new THREE.Vector3(0, 9.2, 12.3)
 const LOOK = new THREE.Vector3(0, 0.45, 0.35)
+const FOV = 32
+// tan(half horizontal FOV) the whole table needs. A fixed vertical FOV is fine on wide screens, but on a
+// portrait phone it squeezes the side seats out of view, so there the FOV widens until the table fits.
+const MIN_HALF_W = 0.3
 
 /** Gentle idle drift plus mouse parallax. Nothing harsh. */
 function CameraRig() {
   const look = useMemo(() => LOOK.clone(), [])
-  useFrame(({ camera, pointer, clock }, dt) => {
+  useFrame(({ camera, pointer, clock, size }, dt) => {
+    const cam = camera as THREE.PerspectiveCamera
+    const aspect = size.width / size.height
+    const fov = Math.min(75, Math.max(FOV, THREE.MathUtils.radToDeg(2 * Math.atan(MIN_HALF_W / aspect))))
+    if (Math.abs(cam.fov - fov) > 0.01) { cam.fov = fov; cam.updateProjectionMatrix() }
+    // Portrait: aim a little higher so the table sits below the captions card instead of under it.
+    look.y = LOOK.y + (aspect < 0.8 ? 1.4 : 0)
     const t = clock.elapsedTime
     const tx = CAM.x + pointer.x * 0.7 + Math.sin(t * 0.18) * 0.25
     const ty = CAM.y + pointer.y * 0.25 + Math.sin(t * 0.13) * 0.12
@@ -70,7 +80,7 @@ export default function Scene3D({ config, state }: Props) {
     <>
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: CAM.toArray(), fov: 32, near: 0.5, far: 60 }}
+      camera={{ position: CAM.toArray(), fov: FOV, near: 0.5, far: 60 }}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       style={{ position: 'absolute', inset: 0 }}
     >

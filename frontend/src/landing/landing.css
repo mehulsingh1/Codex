@@ -18,6 +18,8 @@
 .nav nav { display: flex; gap: 6px; }
 .nav nav a { padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none; transition: background 0.2s; }
 .nav nav a:hover { background: rgba(255, 255, 255, 0.8); }
+.nav-actions { display: flex; gap: 8px; align-items: center; }
+.nav-board { display: none; gap: 6px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.03em; }
 
 /* ---------- hero ---------- */
@@ -124,6 +126,7 @@
   .feat-grid, .persona-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .frame { min-height: 300px; }
   .nav nav { display: none; }
+  .nav-board { display: inline-flex; }
 }
 @media (max-width: 600px) {
   .hero-card { padding: 28px 24px; border-radius: 30px; }
@@ -137,6 +140,8 @@
   .band-card, .cta-card { padding: 26px 22px; }
   .frame.tall { min-height: 280px; }
   .footer { flex-direction: column; align-items: flex-start; }
+  .nav-board { width: 44px; padding: 0; justify-content: center; }
+  .nav-board span { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-demo, .live-dot { animation: none; }

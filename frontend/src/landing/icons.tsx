@@ -13,6 +13,7 @@ const PATHS: Record<string, React.ReactNode> = {
   check: (<path d="M5 12.5l4.5 4.5L19 7.5" />),
   plus: (<path d="M12 5v14M5 12h14" />),
   back: (<path d="M19 12H5M11 6l-6 6 6 6" />),
+  trophy: (<><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4" /></>),
 }
 
 export default function Icon({ name, size = 22, stroke = 1.7 }: { name: keyof typeof PATHS | string; size?: number; stroke?: number }) {

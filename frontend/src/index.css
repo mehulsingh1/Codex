@@ -267,6 +267,15 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .toast { bottom: 140px; }
   .observe { top: 90px; font-size: 12.5px; }
   .flat-orb { width: 11vmin; height: 11vmin; }
+  /* keep the 2D table between the captions card and the dock */
+  .flat-stage { top: 26vh; bottom: 80px; background: none; }
+  .flat-table { width: 62vw; }
+}
+@media (max-width: 380px) {
+  .dock { gap: 5px; padding: 6px 8px; }
+  .dock .mic { width: 40px; height: 40px; }
+  .dock-btn { height: 36px; min-width: 36px; padding: 0 8px; }
+  .end { height: 36px; padding: 0 11px; }
 }
 
 /* live mic level ring */

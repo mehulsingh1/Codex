@@ -38,7 +38,11 @@ export default function Landing({ onStart, onBoard }: { onStart: () => void; onB
           ))}
           <a href="#/leaderboard" onClick={(e) => { e.preventDefault(); onBoard() }}>Leaderboard</a>
         </nav>
-        <button className="btn btn-dark btn-sm" onClick={onStart}>Start free</button>
+        <div className="nav-actions">
+          {/* the text menu is hidden on phones and tablets, so the leaderboard gets its own button there */}
+          <button className="btn btn-glass btn-sm nav-board" onClick={onBoard} aria-label="Leaderboard"><Icon name="trophy" size={18} /><span>Leaderboard</span></button>
+          <button className="btn btn-dark btn-sm" onClick={onStart}>Start free</button>
+        </div>
       </header>
 
       <main>
@@ -193,6 +197,7 @@ export default function Landing({ onStart, onBoard }: { onStart: () => void; onB
         <p><span className="ai-badge">AI</span> All other participants are AI.</p>
         <nav aria-label="Footer">
           {NAV.map((n) => (<a key={n.id} href={`#${n.id}`} onClick={(e) => { e.preventDefault(); go(n.id) }}>{n.label}</a>))}
+          <a href="#/leaderboard" onClick={(e) => { e.preventDefault(); onBoard() }}>Leaderboard</a>
         </nav>
       </footer>
 
