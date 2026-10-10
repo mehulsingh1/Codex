@@ -11,3 +11,4 @@ backend/.venv312/
 !frontend/public/media/*.mp4
 server.log
 server.err.log
+docs/screens/
