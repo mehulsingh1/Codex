@@ -22,9 +22,18 @@ export class RoomClient {
   }
 
   connect() {
-    const proto = location.protocol === 'https:' ? 'wss' : 'ws'
+    // In production VITE_API_URL is the Render backend (e.g. https://codex-backend.onrender.com).
+    // In dev, VITE_API_URL is empty so we use the same host (Vite proxies /ws → localhost:8000).
+    const apiUrl = import.meta.env.VITE_API_URL as string | undefined
+    let wsUrl: string
+    if (apiUrl) {
+      wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws'
+    } else {
+      const proto = location.protocol === 'https:' ? 'wss' : 'ws'
+      wsUrl = `${proto}://${location.host}/ws`
+    }
     this.onStatus(this.attempt === 0 ? 'connecting' : 'reconnecting')
-    const ws = new WebSocket(`${proto}://${location.host}/ws`)
+    const ws = new WebSocket(wsUrl)
     this.ws = ws
     ws.onopen = () => {
       this.attempt = 0

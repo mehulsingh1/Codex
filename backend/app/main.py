@@ -26,9 +26,19 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="GD Arena", lifespan=lifespan)
+_CORS_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://mehulsingh1-codex.pages.dev",  # Cloudflare Pages default URL
+]
+# Allow extra origins set via env (comma-separated), e.g. custom domain
+_extra = os.getenv("CORS_ORIGINS", "")
+if _extra:
+    _CORS_ORIGINS.extend([o.strip() for o in _extra.split(",") if o.strip()])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["X-TTS-Engine"],
