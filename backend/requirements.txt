@@ -1,0 +1,10 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-dotenv>=1.0
+pydantic>=2.7
+groq>=0.11
+edge-tts>=6.1
+python-multipart>=0.0.9
+soundfile>=0.12
+pytest>=8.0
+# Kokoro (local GPU TTS) is optional, see requirements-kokoro.txt

@@ -1,0 +1,4 @@
+# Local GPU text-to-speech. Install PyTorch first (see README), then:
+kokoro>=0.9.4
+soundfile>=0.12
+numpy

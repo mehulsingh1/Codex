@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+node_modules/
+dist/
+*.pyc
+.pytest_cache/
+.venv312/
+backend/.venv312/
+*.mp4
+!frontend/public/media/*.mp4
+server.log
+server.err.log
